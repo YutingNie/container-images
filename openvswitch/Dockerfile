@@ -1,4 +1,4 @@
-FROM alpine:3.15.4
+FROM alpine:3.20.6
 
 MAINTAINER Yousong Zhou <zhouyousong@yunion.cn>
 
@@ -24,7 +24,8 @@ ADD ./aport $OVS_APORT
 RUN set -x \
 	&& chown -R yunion:yunion $OVS_APORT \
 	&& cd $OVS_APORT \
-	&& sudo -u yunion abuild -r -P $OVS_APORT_PKGS
+	# && sudo -u yunion abuild -r -P $OVS_APORT_PKGS
+	&& sudo -u yunion sh -c 'abuild -r -P $0 2>&1' $OVS_APORT_PKGS
 
 RUN set -x \
 	&& echo @yunion file://$OVS_APORT_PKGS/yunion >>/etc/apk/repositories \
