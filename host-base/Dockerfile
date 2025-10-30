@@ -18,12 +18,13 @@ RUN apk add \
 	kmod \
 	pciutils \
 	util-linux \
-	tzdata
+	tzdata \
+	curl
 
 RUN find /var/cache/ -type f | xargs rm -vf
 
 # install nerdctl for containerd management
 RUN cd /tmp && \
-	wget https://github.com/containerd/nerdctl/releases/download/v1.7.7/nerdctl-1.7.7-linux-`echo $TARGETPLATFORM | cut -d / -f 2`.tar.gz && \
-	tar xf nerdctl-1.7.7-linux-`echo $TARGETPLATFORM | cut -d / -f 2`.tar.gz && \
+	curl -L -O https://github.com/containerd/nerdctl/releases/download/v2.1.6/nerdctl-2.1.6-linux-`echo $TARGETPLATFORM | cut -d / -f 2`.tar.gz && \
+	tar xf nerdctl-2.1.6-linux-`echo $TARGETPLATFORM | cut -d / -f 2`.tar.gz && \
 	mv nerdctl /usr/sbin && rm *
